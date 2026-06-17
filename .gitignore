@@ -9,3 +9,5 @@ build/
 .vscode/
 *.swp
 *.swo
+QUICK_START.md
+.github/
