@@ -1,0 +1,35 @@
+/* body {
+  margin: 0;
+  min-height: 100vh;
+  background: #000000;
+  color: #ffffff;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+a {
+  color: #FACC15;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+} */
+
+/* App.css — kept minimal, index.css handles everything */
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#root { min-height: 100vh; }

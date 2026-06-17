@@ -1,0 +1,154 @@
+/* @import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.btn-primary {
+  background-color: #FACC15;
+  color: #000;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #D97706;
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.bg-surface {
+  background-color: #111111;
+}
+
+.bg-surface2 {
+  background-color: #161616;
+}
+
+.text-brand {
+  color: #FACC15;
+}
+
+.card-border {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+::selection {
+  background: #FACC15;
+  color: #000;
+} */
+
+
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap');
+
+@theme {
+  --color-brand:     #FACC15;
+  --color-brand-dark: #D97706;
+  --color-surface:   #111111;
+  --color-surface2:  #161616;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body:    "DM Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+:root { color-scheme: dark; }
+
+html, body, #root {
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #0C0A08;
+  color: #F5EDD8;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #FACC15;
+  color: #0C0A08;
+}
+
+img { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; }
+
+/* ── Component classes (v4: use @reference + @apply) ── */
+@layer components {
+  .btn-primary {
+    @apply inline-block bg-brand text-black font-semibold rounded-full px-7 py-3 text-sm transition-all duration-200 hover:bg-brand-dark hover:-translate-y-px;
+  }
+
+  .btn-secondary {
+    @apply inline-block bg-white/10 text-white border border-white/20 font-semibold rounded-full px-7 py-3 text-sm transition-all duration-200 hover:bg-white/15;
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-gray-400 hover:text-white transition-colors duration-150;
+  }
+  .nav-link.active {
+    @apply text-brand;
+  }
+
+  .card-feature {
+    @apply bg-[#1C1814] border border-white/[0.06] rounded-2xl p-7 transition-all duration-200 hover:border-brand/20 hover:-translate-y-0.5;
+  }
+
+  .card-variety {
+    @apply bg-[#141210] border border-brand/10 rounded-2xl p-6 flex flex-col gap-2 transition-colors duration-200 hover:border-brand/30;
+  }
+
+  .section-eyebrow {
+    @apply block text-brand text-xs font-semibold tracking-[0.18em] uppercase mb-3;
+  }
+
+  .section-title {
+    @apply font-bold text-[#F5EDD8] leading-snug;
+    font-family: var(--font-display);
+  }
+}

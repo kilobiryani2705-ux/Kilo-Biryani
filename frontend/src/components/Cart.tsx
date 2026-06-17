@@ -1,0 +1,95 @@
+import type { FC } from 'react';
+import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
+
+export const Cart: FC = () => {
+  const { items, removeItem, updateQuantity, getTotalAmount, getTotalItems } = useCart();
+
+  if (items.length === 0) {
+    return (
+      <div className="bg-black min-h-screen text-white">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
+          <div className="bg-surface2 rounded-3xl shadow-xl p-10 text-center card-border">
+            <p className="text-gray-400 mb-4">Your cart is empty</p>
+            <Link to="/menu" className="btn-primary inline-block">
+              Continue Shopping
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-black min-h-screen text-white">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <div className="overflow-hidden rounded-3xl border border-white/10 shadow-xl bg-surface2">
+              <table className="w-full text-left">
+                <thead className="bg-white/5 border-b border-white/10">
+                  <tr>
+                    <th className="px-4 py-4 text-sm text-gray-300">Product</th>
+                    <th className="px-4 py-4 text-sm text-gray-300">Size</th>
+                    <th className="px-4 py-4 text-sm text-gray-300">Price</th>
+                    <th className="px-4 py-4 text-sm text-gray-300">Quantity</th>
+                    <th className="px-4 py-4 text-sm text-gray-300">Subtotal</th>
+                    <th className="px-4 py-4 text-sm text-gray-300">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((item) => (
+                    <tr key={`${item.productId}-${item.type}`} className="border-b border-white/10">
+                      <td className="px-4 py-4 text-sm text-white">{item.name}</td>
+                      <td className="px-4 py-4 text-sm text-gray-300 capitalize">{item.type}</td>
+                      <td className="px-4 py-4 text-sm text-brand">₹{item.price}</td>
+                      <td className="px-4 py-4">
+                        <input
+                          type="number"
+                          min="1"
+                          value={item.quantity}
+                          onChange={(e) =>
+                            updateQuantity(item.productId, item.type, parseInt(e.target.value))
+                          }
+                          className="w-20 rounded-xl border border-white/10 bg-black/60 px-2 py-2 text-white"
+                        />
+                      </td>
+                      <td className="px-4 py-4 text-sm text-white">₹{item.price * item.quantity}</td>
+                      <td className="px-4 py-4 text-sm">
+                        <button
+                          onClick={() => removeItem(item.productId, item.type)}
+                          className="text-red-400 hover:text-red-500"
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-surface2 p-6 shadow-xl h-fit card-border">
+            <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between text-gray-300">
+                <span>Total Items:</span>
+                <span className="font-semibold">{getTotalItems()}</span>
+              </div>
+              <div className="border-t border-white/10 pt-4 flex justify-between text-lg font-bold text-white">
+                <span>Total Amount:</span>
+                <span className="text-brand">₹{getTotalAmount().toFixed(2)}</span>
+              </div>
+            </div>
+            <Link to="/checkout" className="btn-primary block text-center">
+              Proceed to Checkout
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
