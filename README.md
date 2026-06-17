@@ -183,13 +183,13 @@ biryani-website/
 6. **Payment** - Scan UPI QR code and enter transaction ID
 7. **Order Confirmation** - Order placed successfully
 
-## 🔑 Admin Credentials
+<!-- ## 🔑 Admin Credentials
 
-<!-- Default admin credentials (set these up in your MongoDB):
+Default admin credentials (set these up in your MongoDB):
 - **Email:** admin@biryani.com
-- **Password:** admin123 -->
+- **Password:** admin123
 
-⚠️ **Important:** Change these credentials in production!
+⚠️ **Important:** Change these credentials in production! -->
 
 ## 🗄️ Database Models
 
