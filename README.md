@@ -185,9 +185,9 @@ biryani-website/
 
 ## 🔑 Admin Credentials
 
-Default admin credentials (set these up in your MongoDB):
+<!-- Default admin credentials (set these up in your MongoDB):
 - **Email:** admin@biryani.com
-- **Password:** admin123
+- **Password:** admin123 -->
 
 ⚠️ **Important:** Change these credentials in production!
 
