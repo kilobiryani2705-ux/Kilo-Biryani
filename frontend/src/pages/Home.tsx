@@ -134,7 +134,7 @@ export const Home: FC = () => {
             <em className="text-brand not-italic">hits different.</em>
           </h1>
 
-          <p className="text-[#B5A88A] text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+          <p className="font-sans text-[#B5A88A] text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-8">
             Dum-cooked over slow fire. Layered with saffron, caramelised onions, and spices
             sourced straight from Nizamabad — then brought to your door still steaming.
           </p>
