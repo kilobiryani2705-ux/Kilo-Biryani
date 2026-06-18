@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { sendOrderNotification } from '../utils/mailer';
 import Order from '../models/Order';
 
 const router = Router();
@@ -12,6 +13,16 @@ router.post('/', async (req: Request, res: Response) => {
       orderNumber,
     });
     await order.save();
+    sendOrderNotification({
+      orderNumber:          order.orderNumber,
+      customerName:         order.customerName,
+      customerPhone:        order.customerPhone,
+      deliveryAddress:      order.deliveryAddress,
+      items:                order.items,
+      totalAmount:          order.totalAmount,
+      paymentTransactionId: order.paymentTransactionId,
+      specialInstructions:  order.specialInstructions,
+    });
     res.status(201).json(order);
   } catch (error) {
     res.status(500).json({ error: 'Failed to create order' });

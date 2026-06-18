@@ -10,13 +10,34 @@ router.post('/login', async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const admin = await Admin.findOne({ email });
-    
-    if (!admin || admin.password !== password) {
-      res.status(401).json({ error: 'Invalid credentials' });
+
+    if (admin) {
+      if (admin.password !== password) {
+        res.status(401).json({ error: 'Invalid credentials' });
+        return;
+      }
+
+      res.json({ message: 'Login successful', admin: { id: admin._id, email: admin.email, name: admin.name } });
       return;
     }
-    
-    res.json({ message: 'Login successful', admin: { id: admin._id, email: admin.email, name: admin.name } });
+
+    // Fallback to environment credentials if no admin account exists yet
+    const envEmail = process.env.ADMIN_EMAIL;
+    const envPassword = process.env.ADMIN_PASSWORD;
+    if (email === envEmail && password === envPassword) {
+      const name = process.env.ADMIN_NAME || 'Admin';
+
+      const createdAdmin = await Admin.findOneAndUpdate(
+        { email },
+        { email, password, name },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
+
+      res.json({ message: 'Login successful', admin: { id: createdAdmin._id, email: createdAdmin.email, name: createdAdmin.name } });
+      return;
+    }
+
+    res.status(401).json({ error: 'Invalid credentials' });
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
   }

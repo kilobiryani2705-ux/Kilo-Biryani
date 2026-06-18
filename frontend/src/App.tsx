@@ -7,6 +7,8 @@ import { Cart } from './components/Cart';
 import { Checkout } from './pages/Checkout';
 import { OrderConfirmation } from './pages/OrderConfirmation';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { AdminProducts } from './pages/AdminProducts';
+import { AdminEditProduct } from './pages/AdminEditProduct';
 import './App.css';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/products" element={<AdminProducts />} />
+              <Route path="/admin/products/edit/:id" element={<AdminEditProduct />} />
             </Routes>
           </main>
           <footer className="bg-surface2 text-white py-6 mt-12 border-t border-white/10">

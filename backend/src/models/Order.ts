@@ -38,7 +38,7 @@ const orderSchema = new Schema<IOrder>(
     ],
     totalAmount: { type: Number, required: true },
     paymentTransactionId: { type: String, required: true },
-    paymentStatus: { type: String, enum: ['pending', 'completed', 'failed'], default: 'pending' },
+    paymentStatus: { type: String, enum: ['pending', 'completed', 'failed'], default: 'completed' },
     orderStatus: { type: String, enum: ['pending', 'preparing', 'ready', 'delivered', 'cancelled'], default: 'pending' },
     specialInstructions: String,
   },
