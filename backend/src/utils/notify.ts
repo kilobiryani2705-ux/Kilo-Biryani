@@ -1,4 +1,4 @@
-// Sends a push notification to the owner's phone via ntfy.sh
+// Sends a push notification to the owner's phone via ntfy.sh application.
 // Works over plain HTTPS — no SMTP, so it works fine on Render free tier.
 
 const NTFY_TOPIC = process.env.NTFY_TOPIC || 'kilo-biryani-orders-kdricuq7le0c';
