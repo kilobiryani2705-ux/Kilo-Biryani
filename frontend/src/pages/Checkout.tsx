@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 import { orderService, settingsService } from '../services/api';
 
 const UPI_ID   = '8830845733@ybl';
@@ -22,6 +23,7 @@ type LocationStatus = 'idle' | 'loading' | 'success' | 'denied' | 'error';
 export const Checkout: FC = () => {
   const navigate = useNavigate();
   const { items, getTotalAmount, clearCart } = useCart();
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     customerName: '',
     customerPhone: '',
@@ -60,6 +62,11 @@ export const Checkout: FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setFormData((prev) => ({ ...prev, customerPhone: digitsOnly }));
+  };
+
   const handleUseMyLocation = () => {
     if (!navigator.geolocation) {
       setLocationStatus('error');
@@ -92,11 +99,11 @@ export const Checkout: FC = () => {
   };
 
   const validateForm = () => {
-    if (!formData.customerName.trim()) { alert('Please enter your name'); return false; }
-    if (!formData.customerPhone.trim() || formData.customerPhone.length < 10) {
-      alert('Please enter a valid 10-digit mobile number'); return false;
+    if (!formData.customerName.trim()) { showToast('Please enter your name'); return false; }
+    if (formData.customerPhone.length !== 10) {
+      showToast('Please enter a valid 10-digit mobile number'); return false;
     }
-    if (!formData.deliveryAddress.trim()) { alert('Please enter your delivery address'); return false; }
+    if (!formData.deliveryAddress.trim()) { showToast('Please enter your delivery address'); return false; }
     return true;
   };
 
@@ -106,7 +113,7 @@ export const Checkout: FC = () => {
 
   const handlePlaceOrder = async () => {
     if (!transactionId.trim()) {
-      alert('Please enter the UPI transaction ID after payment'); return;
+      showToast('Please enter the UPI transaction ID after payment'); return;
     }
     setLoading(true);
     try {
@@ -128,7 +135,7 @@ export const Checkout: FC = () => {
       navigate('/order-confirmation');
     } catch (error) {
       console.error('Failed to place order:', error);
-      alert('Failed to place order. Please try again.');
+      showToast('Failed to place order. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -169,10 +176,17 @@ export const Checkout: FC = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">Mobile Number</label>
-                    <input type="tel" name="customerPhone" value={formData.customerPhone}
-                      onChange={handleInputChange}
+                    <input
+                      type="tel"
+                      name="customerPhone"
+                      inputMode="numeric"
+                      value={formData.customerPhone}
+                      onChange={handlePhoneChange}
+                      maxLength={10}
                       className="w-full rounded-2xl border border-white/10 bg-black/60 px-4 py-3 text-white"
-                      placeholder="10-digit mobile number" />
+                      placeholder="10-digit mobile number"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">{formData.customerPhone.length}/10 digits</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">Delivery Address</label>

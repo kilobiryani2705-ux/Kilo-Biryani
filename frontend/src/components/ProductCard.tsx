@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Product, CartItem } from '../types';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 
 interface ProductCardProps {
   product: Product;
@@ -8,6 +9,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { addItem } = useCart();
+  const { showToast } = useToast();
   const [selectedType, setSelectedType] = useState<'plate' | 'kg' | 'halfKg'>('plate');
   const [quantity, setQuantity] = useState(1);
   const [imgError, setImgError] = useState(false);
@@ -23,8 +25,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       image: product.image,
     };
     addItem(cartItem);
+    showToast(`${product.name} added to cart`);
     setQuantity(1);
-    alert('Added to cart!');
+    //alert('Added to cart!');
   };
 
   return (

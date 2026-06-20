@@ -299,6 +299,7 @@ import { useState, useEffect } from 'react';
 import { adminService, orderService, settingsService } from '../services/api';
 import { Link } from 'react-router-dom';
 import type { DashboardData } from '../types';
+import { useToast } from '../context/ToastContext';
 
 const ADMIN_AUTH_KEY      = 'kb_admin_auth';
 const ADMIN_TIMESTAMP_KEY = 'kb_admin_auth_timestamp';
@@ -319,6 +320,7 @@ export const AdminDashboard: FC = () => {
     return false;
   });
 
+  const { showToast } = useToast();
   const [email, setEmail]                 = useState('');
   const [password, setPassword]           = useState('');
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
@@ -332,7 +334,7 @@ export const AdminDashboard: FC = () => {
   const [feeMessage, setFeeMessage]             = useState('');
 
   const handleLogin = async () => {
-    if (!email.trim() || !password.trim()) { alert('Please enter email and password'); return; }
+    if (!email.trim() || !password.trim()) { showToast('Please enter email and password'); return; }
     setLoading(true);
     setErrorMessage('');
     try {
