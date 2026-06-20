@@ -22,7 +22,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://biryani-website-theta.vercel.app',
-    'https://kilo-biryani.vercel.app/',
+    'https://kilo-biryani.vercel.app',
   ],
   credentials: true,
 }));
