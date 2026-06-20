@@ -35,6 +35,7 @@ router.post('/', async (req: Request, res: Response) => {
       customerPhone:   order.customerPhone,
       totalAmount:     order.totalAmount,
       deliveryAddress: order.deliveryAddress,
+      locationMapsUrl: order.locationMapsUrl,
     });
 
     res.status(201).json(order);

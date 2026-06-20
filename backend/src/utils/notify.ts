@@ -10,9 +10,17 @@ export const sendOrderPushAlert = async (order: {
   customerPhone: string;
   totalAmount: number;
   deliveryAddress: string;
+  locationMapsUrl?: string;
 }) => {
   try {
-    const body = `${order.customerName} • ₹${order.totalAmount}\n${order.deliveryAddress}\nCall: ${order.customerPhone}`;
+    const body = [
+      `${order.customerName} • ₹${order.totalAmount}`,
+      order.deliveryAddress,
+      `Call: ${order.customerPhone}`,
+      order.locationMapsUrl ? `📍 Live location: ${order.locationMapsUrl}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n');
 
     await fetch(NTFY_URL, {
       method: 'POST',
